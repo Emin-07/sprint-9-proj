@@ -81,11 +81,11 @@ func main() {
 	for i, ch := range outs {
 		wg.Add(1)
 		go func(in <-chan int64, i int) {
+			defer wg.Done()
 			for v := range in {
 				chOut <- v
 				amounts[i]++
 			}
-			wg.Done()
 		}(ch, i)
 	}
 
